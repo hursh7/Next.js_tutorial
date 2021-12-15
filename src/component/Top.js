@@ -1,13 +1,16 @@
 import Gnb from './Gnb';
+// import Image from 'next/image';
 
 export default function Top() {
   return (
     <header style={{ display: 'flex' }}>
-      <img
+      {/* <Image
         src='/images/logo.png'
         alt='logo'
-        style={{ display: 'block', width: '100px' }}
-      />
+        layout='fill'
+        style={{ width: '50px', display: 'block' }}
+      /> */}
+      <p>logo</p>
       <Gnb />
     </header>
   );
