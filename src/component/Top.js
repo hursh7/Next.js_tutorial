@@ -1,17 +1,15 @@
+import { Header } from 'semantic-ui-react';
 import Gnb from './Gnb';
 // import Image from 'next/image';
 
 export default function Top() {
   return (
-    <header style={{ display: 'flex' }}>
-      {/* <Image
-        src='/images/logo.png'
-        alt='logo'
-        layout='fill'
-        style={{ width: '50px', display: 'block' }}
-      /> */}
-      <p>logo</p>
+    <div>
+      <div style={{ display: 'flex', paddingTop: 20 }}>
+        <div style={{ flex: '100px 0 0' }}>Next.js</div>
+        <Header as='h1'>Tutorial</Header>
+      </div>
       <Gnb />
-    </header>
+    </div>
   );
 }

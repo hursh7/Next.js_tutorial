@@ -1,29 +1,38 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import Head from 'next/head';
 import Axios from 'axios';
 import Item from '../../src/component/Item';
 
-const Post = () => {
-  const router = useRouter();
-  const { id } = router.query;
-
-  const [item, setItem] = useState({});
-
-  const API_URL = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json?brand=maybelline`;
-
-  function getData() {
-    Axios.get(API_URL).then(result => {
-      console.log(result.data);
-    });
-  }
-
-  useEffect(() => {
-    if (id && id > 0) {
-      getData();
-    }
-  }, [id]);
-
-  return <Item item={item} />;
+const Post = ({ item, name }) => {
+  return (
+    <>
+      {item && (
+        <>
+          <Head>
+            <title>{item.name}</title>
+            <meta name='description' content={item.description}></meta>
+          </Head>
+          {name} 환경 입니다.
+          <Item item={item} />
+        </>
+      )}
+    </>
+  );
 };
 
 export default Post;
+
+export async function getServerSideProps(context) {
+  // 서버에서 데이터를 받아온다.
+  const id = context.params.id;
+  const apiUrl = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+  const res = await Axios.get(apiUrl);
+  const data = res.data;
+
+  return {
+    props: {
+      item: data,
+      name: process.env.name,
+      // 서버에서 받아 온 데이터를 props에 주입시켜 준다.
+    },
+  };
+}

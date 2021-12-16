@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
+import { Loader, Header, Divider } from 'semantic-ui-react';
 import Head from 'next/head';
 import Axios from 'axios';
 import ItemList from '../src/component/ItemList';
-import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
   const [list, setList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const API_URL =
-    'http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline';
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   function getData() {
-    Axios.get(API_URL).then(result => {
-      setList(result.data);
+    Axios.get(API_URL).then(res => {
+      setList(res.data);
+      setIsLoading(false);
     });
   }
 
@@ -25,9 +26,29 @@ export default function Home() {
     <div>
       <Head>
         <title>Home | Tutorial</title>
+        <meta name='description' content='Next.js tutorial home'></meta>
       </Head>
-      <h3>베스트 상품</h3>
-      <ItemList list={list.slice(0, 9)} />
+      {isLoading && (
+        <div style={{ padding: '300px 0' }}>
+          <Loader inline='centered' active>
+            Loading
+          </Loader>
+        </div>
+      )}
+      {!isLoading && (
+        <>
+          <Header as='h3' style={{ paddingTop: 40 }}>
+            베스트 상품
+          </Header>
+          <Divider />
+          <ItemList list={list.slice(0, 9)} />
+          <Header as='h3' style={{ paddingTop: 40 }}>
+            신상품
+          </Header>
+          <Divider />
+          <ItemList list={list.slice(9)} />
+        </>
+      )}
     </div>
   );
 }

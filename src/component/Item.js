@@ -1,9 +1,7 @@
-import { useRef } from 'react';
-import { Button, Image } from 'semantic-ui-react';
+import { Button, Image, Header } from 'semantic-ui-react';
 
 export default function Item({ item }) {
   const { image_link, name, price, description } = item;
-  const btnRef = useRef();
   return (
     <>
       <div>
@@ -13,10 +11,9 @@ export default function Item({ item }) {
         <strong>{name}</strong>
         <strong>${price}</strong>
       </div>
-      <Button ref={btnRef} color='orange'>
-        Buy it!
-      </Button>
+      <Button color='orange'>Buy it!</Button>
       <div>
+        <Header as='h3'>Description</Header>
         <p>{description}</p>
       </div>
     </>
