@@ -8,7 +8,7 @@ export default function ItemList({ list }) {
         <Grid.Row>
           {list.map(item => (
             <Grid.Column key={item.id}>
-              <Link href='/view/[id]' as={`/view/${item.id}`}>
+              <Link href='/detail/[id]' as={`/detail/${item.id}`}>
                 <a>
                   <Image src={item.image_link} alt={item.name} />
                   <strong>{item.name}</strong>
